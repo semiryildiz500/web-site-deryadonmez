@@ -1,69 +1,117 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Arrow, Mail, Phone } from "@/components/Icons";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
-export default function Home() {
+const W = 1223;
+const H = 1286;
+
+type Spot = { label: string; href: string; x: number; y: number; w: number; h: number };
+
+// Koordinatlar referans görselin piksel değerleridir (1223x1286); yüzdeye çevrilir.
+const spots: Spot[] = [
+  { label: "Ana Sayfa", href: "/", x: 432, y: 30, w: 90, h: 42 },
+  { label: "Hakkımda", href: "/hakkimda", x: 562, y: 30, w: 90, h: 42 },
+  { label: "Hizmetlerimiz", href: "/hizmetlerimiz", x: 692, y: 30, w: 114, h: 42 },
+  { label: "İletişim", href: "/iletisim", x: 850, y: 30, w: 66, h: 42 },
+  { label: "Randevu Al", href: "/iletisim", x: 987, y: 21, w: 192, h: 53 },
+  { label: "İletişime Geçin", href: "/iletisim", x: 77, y: 670, w: 264, h: 62 },
+  { label: "Tüm Hizmetlerimizi İnceleyin", href: "/hizmetlerimiz", x: 944, y: 936, w: 246, h: 34 },
+  { label: "Telefon: 0530 477 87 00", href: "tel:+905304778700", x: 60, y: 1212, w: 184, h: 44 },
+  { label: "E-posta: smmmderyadonmez@outlook.com", href: "mailto:smmmderyadonmez@outlook.com", x: 298, y: 1212, w: 362, h: 44 },
+  { label: "Randevu Al", href: "/iletisim", x: 968, y: 1208, w: 198, h: 54 },
+];
+
+const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
+
+const mobileLinks = [
+  { href: "/", label: "Ana Sayfa" },
+  { href: "/hakkimda", label: "Hakkımda" },
+  { href: "/hizmetlerimiz", label: "Hizmetlerimiz" },
+  { href: "/iletisim", label: "İletişim" },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <main id="icerik" className="flex-1 bg-navy">
+      <h1 className="sr-only">Derya Dönmez - Serbest Muhasebeci Mali Müşavir</h1>
+
+      <div className="relative mx-auto w-full max-w-[1600px]">
         <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/images/v3-final.png"
+          alt="Derya Dönmez, Serbest Muhasebeci Mali Müşavir. Güvenle Yönetilen Finansal Süreçler. Mesleğe başlama tarihi 01.09.2008, 18 yıldan fazla mesleki deneyim."
+          width={W}
+          height={H}
           priority
+          unoptimized
+          className="block h-auto w-full object-contain"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+        <div className="hidden md:block">
+          {spots.map((s) =>
+            s.href.startsWith("tel:") ? (
+              <WhatsAppLink
+                key={`${s.label}-${s.x}-${s.y}`}
+                aria-label={`${s.label} (WhatsApp penceresini aç)`}
+                className="absolute block focus-visible:bg-gold/20"
+                style={{
+                  left: pct(s.x, W),
+                  top: pct(s.y, H),
+                  width: pct(s.w, W),
+                  height: pct(s.h, H),
+                }}
+              />
+            ) : (
+            <Link
+              key={`${s.label}-${s.x}-${s.y}`}
+              href={s.href}
+              aria-label={s.label}
+              className="absolute block focus-visible:bg-gold/20"
+              style={{
+                left: pct(s.x, W),
+                top: pct(s.y, H),
+                width: pct(s.w, W),
+                height: pct(s.h, H),
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            ),
+          )}
         </div>
-      </main>
-    </div>
+      </div>
+
+      <nav
+        aria-label="Mobil menü"
+        className="border-t border-gold/40 bg-navy px-5 py-8 md:hidden"
+      >
+        <ul className="grid grid-cols-2 gap-3">
+          {mobileLinks.map((l) => (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                className="block border border-gold/40 px-4 py-4 text-center text-white transition-colors hover:border-gold hover:text-gold"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-5 flex flex-col gap-3">
+          <WhatsAppLink className="flex items-center justify-center gap-3 bg-gold px-4 py-4 text-lg font-medium text-navy">
+            <Phone className="h-5 w-5" /> 0530 477 87 00
+          </WhatsAppLink>
+          <a
+            href="mailto:smmmderyadonmez@outlook.com"
+            className="flex items-center justify-center gap-3 break-all border border-gold px-4 py-4 text-gold"
+          >
+            <Mail className="h-5 w-5 shrink-0" /> smmmderyadonmez@outlook.com
+          </a>
+          <Link
+            href="/iletisim"
+            className="flex items-center justify-center gap-3 border border-gold/40 px-4 py-4 text-white"
+          >
+            Randevu Al <Arrow />
+          </Link>
+        </div>
+      </nav>
+    </main>
   );
 }

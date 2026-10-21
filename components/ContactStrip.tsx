@@ -1,6 +1,7 @@
 import { Arrow, Mail, Phone, Pin } from "./Icons";
 import WhatsAppLink from "./WhatsAppLink";
 import { APPOINTMENT_URL } from "@/lib/whatsapp";
+import { ADDRESS_INLINE, ADDRESS_LINES, MAPS_URL } from "@/lib/address";
 
 export default function ContactStrip() {
   return (
@@ -14,9 +15,22 @@ export default function ContactStrip() {
           <Mail className="h-6 w-6 shrink-0 text-gold" /> smmmderyadonmez@outlook.com
         </a>
         <span className="hidden h-12 w-px bg-white/20 lg:block" aria-hidden="true" />
-        <p className="flex items-center gap-4 text-lg">
-          <Pin className="h-6 w-6 text-gold" /> İskenderun / Hatay
-        </p>
+        <a
+          href={MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Adres: ${ADDRESS_INLINE} (Google Haritalar, yeni sekmede açılır)`}
+          className="flex items-center gap-4 text-lg transition-colors hover:text-gold"
+        >
+          <Pin className="h-6 w-6 shrink-0 text-gold" />
+          <span>
+            {ADDRESS_LINES.map((l) => (
+              <span key={l} className="block leading-snug">
+                {l}
+              </span>
+            ))}
+          </span>
+        </a>
         <a
           href={APPOINTMENT_URL}
           target="_blank"

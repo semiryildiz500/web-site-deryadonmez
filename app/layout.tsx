@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import WhatsAppDialog from "@/components/WhatsAppDialog";
+import { MAPS_URL } from "@/lib/address";
 
 const serif = Cormorant_Garamond({
   variable: "--font-serif-display",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | Derya Dönmez SMMM",
   },
   description:
-    "Derya Dönmez, Serbest Muhasebeci Mali Müşavir. İskenderun / Hatay'da muhasebe, vergi danışmanlığı ve mali müşavirlik hizmetleri.",
+    "Derya Dönmez, Serbest Muhasebeci Mali Müşavir. Arsuz / Hatay'da muhasebe, vergi danışmanlığı ve mali müşavirlik hizmetleri.",
   openGraph: {
     title: "Derya Dönmez SMMM",
     description: "Güvenle Yönetilen Finansal Süreçler",
@@ -41,6 +42,26 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           İçeriğe geç
         </a>
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "AccountingService",
+              name: "Derya Dönmez SMMM",
+              telephone: "+905304778700",
+              email: "smmmderyadonmez@outlook.com",
+              hasMap: MAPS_URL,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Karaağaç Konarlı Mahallesi, 10151. Sokak No: 10",
+                addressLocality: "Arsuz",
+                addressRegion: "Hatay",
+                addressCountry: "TR",
+              },
+            }),
+          }}
+        />
         <WhatsAppDialog />
       </body>
     </html>

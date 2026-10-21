@@ -8,7 +8,7 @@ import { APPOINTMENT_URL } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "Hakkımda",
   description:
-    "Derya Dönmez, Serbest Muhasebeci Mali Müşavir. 01.09.2008'den bu yana güven, şeffaflık, titizlik ve mesleki etik ilkeleriyle muhasebe ve mali müşavirlik hizmeti. İskenderun / Hatay.",
+    "Derya Dönmez, Serbest Muhasebeci Mali Müşavir. 01.09.2008'den bu yana güven, şeffaflık, titizlik ve mesleki etik ilkeleriyle muhasebe ve mali müşavirlik hizmeti. Arsuz / Hatay.",
   alternates: { canonical: "/hakkimda" },
   openGraph: {
     title: "Hakkımda | Derya Dönmez SMMM",

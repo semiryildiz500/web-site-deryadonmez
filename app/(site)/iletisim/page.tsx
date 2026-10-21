@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import WhatsAppLink from "@/components/WhatsAppLink";
 import { Mail, Phone, Pin } from "@/components/Icons";
+import { ADDRESS_INLINE, ADDRESS_LINES, MAPS_URL } from "@/lib/address";
 
 export const metadata: Metadata = {
   title: "İletişim",
   description:
-    "Derya Dönmez SMMM ile iletişime geçin. Telefon: 0530 477 87 00, E-posta: smmmderyadonmez@outlook.com, İskenderun / Hatay.",
+    "Derya Dönmez SMMM ile iletişime geçin. Telefon: 0530 477 87 00, E-posta: smmmderyadonmez@outlook.com, Karaağaç Konarlı Mahallesi, 10151. Sokak No: 10, Arsuz / Hatay.",
 };
 
 export default function IletisimPage() {
@@ -35,8 +36,20 @@ export default function IletisimPage() {
           </li>
           <li className="border border-gold/30 bg-navy-2 p-8">
             <Pin className="h-9 w-9 text-gold" />
-            <h2 className="mt-5 font-serif text-2xl">Konum</h2>
-            <p className="mt-3 text-lg text-white/85">İskenderun / Hatay</p>
+            <h2 className="mt-5 font-serif text-2xl">Adres</h2>
+            <a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${ADDRESS_INLINE} (Google Haritalar, yeni sekmede açılır)`}
+              className="mt-3 block text-lg text-white/85 hover:text-gold"
+            >
+              {ADDRESS_LINES.map((l) => (
+                <span key={l} className="block">
+                  {l}
+                </span>
+              ))}
+            </a>
           </li>
         </ul>
       </section>

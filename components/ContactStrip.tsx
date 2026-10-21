@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Arrow, Mail, Phone, Pin } from "./Icons";
 import WhatsAppLink from "./WhatsAppLink";
+import { APPOINTMENT_URL } from "@/lib/whatsapp";
 
 export default function ContactStrip() {
   return (
@@ -17,12 +17,14 @@ export default function ContactStrip() {
         <p className="flex items-center gap-4 text-lg">
           <Pin className="h-6 w-6 text-gold" /> İskenderun / Hatay
         </p>
-        <Link
-          href="/iletisim"
+        <a
+          href={APPOINTMENT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-4 bg-gold px-10 py-4 text-lg font-medium text-navy transition-colors hover:bg-white"
         >
           Randevu Al <Arrow />
-        </Link>
+        </a>
       </div>
       <p className="border-t border-white/10 px-5 py-4 text-center text-xs text-white/50">
         © Derya Dönmez SMMM. Tüm hakları saklıdır.

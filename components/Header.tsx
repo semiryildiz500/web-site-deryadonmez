@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Logo from "./Logo";
 import { Arrow } from "./Icons";
+import { APPOINTMENT_URL } from "@/lib/whatsapp";
 
 const links = [
   { href: "/", label: "Ana Sayfa" },
@@ -40,12 +41,14 @@ export default function Header() {
           })}
         </nav>
 
-        <Link
-          href="/iletisim"
+        <a
+          href={APPOINTMENT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden items-center gap-3 border border-gold px-7 py-3 text-[15px] text-gold transition-colors hover:bg-gold hover:text-navy lg:inline-flex"
         >
           Randevu Al <Arrow />
-        </Link>
+        </a>
 
         <button
           type="button"
@@ -78,13 +81,15 @@ export default function Header() {
               {l.label}
             </Link>
           ))}
-          <Link
-            href="/iletisim"
+          <a
+            href={APPOINTMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
             className="mt-2 bg-gold px-3 py-3 text-center font-medium text-navy"
           >
             Randevu Al
-          </Link>
+          </a>
         </nav>
       )}
     </header>

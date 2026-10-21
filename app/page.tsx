@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow, Mail, Phone } from "@/components/Icons";
 import WhatsAppLink from "@/components/WhatsAppLink";
+import { APPOINTMENT_URL } from "@/lib/whatsapp";
 
 const W = 1223;
 const H = 1286;
@@ -14,12 +15,12 @@ const spots: Spot[] = [
   { label: "Hakkımda", href: "/hakkimda", x: 562, y: 30, w: 90, h: 42 },
   { label: "Hizmetlerimiz", href: "/hizmetlerimiz", x: 692, y: 30, w: 114, h: 42 },
   { label: "İletişim", href: "/iletisim", x: 850, y: 30, w: 66, h: 42 },
-  { label: "Randevu Al", href: "/iletisim", x: 987, y: 21, w: 192, h: 53 },
+  { label: "Randevu Al", href: APPOINTMENT_URL, x: 987, y: 21, w: 192, h: 53 },
   { label: "İletişime Geçin", href: "/iletisim", x: 77, y: 670, w: 264, h: 62 },
   { label: "Tüm Hizmetlerimizi İnceleyin", href: "/hizmetlerimiz", x: 944, y: 936, w: 246, h: 34 },
   { label: "Telefon: 0530 477 87 00", href: "tel:+905304778700", x: 60, y: 1212, w: 184, h: 44 },
   { label: "E-posta: smmmderyadonmez@outlook.com", href: "mailto:smmmderyadonmez@outlook.com", x: 298, y: 1212, w: 362, h: 44 },
-  { label: "Randevu Al", href: "/iletisim", x: 968, y: 1208, w: 198, h: 54 },
+  { label: "Randevu Al", href: APPOINTMENT_URL, x: 968, y: 1208, w: 198, h: 54 },
 ];
 
 const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
@@ -48,7 +49,22 @@ export default function HomePage() {
         />
         <div className="hidden md:block">
           {spots.map((s) =>
-            s.href.startsWith("tel:") ? (
+            s.href.startsWith("https://") ? (
+              <a
+                key={`${s.label}-${s.x}-${s.y}`}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${s.label} (WhatsApp, yeni sekmede açılır)`}
+                className="absolute block focus-visible:bg-gold/20"
+                style={{
+                  left: pct(s.x, W),
+                  top: pct(s.y, H),
+                  width: pct(s.w, W),
+                  height: pct(s.h, H),
+                }}
+              />
+            ) : s.href.startsWith("tel:") ? (
               <WhatsAppLink
                 key={`${s.label}-${s.x}-${s.y}`}
                 aria-label={`${s.label} (WhatsApp penceresini aç)`}
@@ -104,12 +120,14 @@ export default function HomePage() {
           >
             <Mail className="h-5 w-5 shrink-0" /> smmmderyadonmez@outlook.com
           </a>
-          <Link
-            href="/iletisim"
+          <a
+            href={APPOINTMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 border border-gold/40 px-4 py-4 text-white"
           >
             Randevu Al <Arrow />
-          </Link>
+          </a>
         </div>
       </nav>
     </main>

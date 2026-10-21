@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow, Mail, Phone } from "@/components/Icons";
 import WhatsAppLink from "@/components/WhatsAppLink";
+import { APPOINTMENT_URL } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Hakkımda",
@@ -30,7 +31,7 @@ const spots: Spot[] = [
   { label: "Hakkımda", href: "/hakkimda", x: 846, y: 26, w: 88, h: 44 },
   { label: "Hizmetlerimiz", href: "/hizmetlerimiz", x: 958, y: 26, w: 118, h: 36 },
   { label: "İletişim", href: "/iletisim", x: 1098, y: 26, w: 68, h: 36 },
-  { label: "Randevu Al", href: "/iletisim", x: 1224, y: 18, w: 170, h: 50 },
+  { label: "Randevu Al", href: APPOINTMENT_URL, x: 1224, y: 18, w: 170, h: 50 },
 ];
 
 const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
@@ -58,7 +59,23 @@ export default function AboutPage() {
           className="block h-auto w-full object-contain"
         />
         <div className="hidden md:block">
-          {spots.map((s) => (
+          {spots.map((s) =>
+            s.href.startsWith("https://") ? (
+              <a
+                key={`${s.label}-${s.x}-${s.y}`}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${s.label} (WhatsApp, yeni sekmede açılır)`}
+                className="absolute block focus-visible:bg-gold/20"
+                style={{
+                  left: pct(s.x, W),
+                  top: pct(s.y, H),
+                  width: pct(s.w, W),
+                  height: pct(s.h, H),
+                }}
+              />
+            ) : (
             <Link
               key={`${s.label}-${s.x}-${s.y}`}
               href={s.href}
@@ -71,7 +88,8 @@ export default function AboutPage() {
                 height: pct(s.h, H),
               }}
             />
-          ))}
+            ),
+          )}
         </div>
       </div>
 
@@ -98,12 +116,14 @@ export default function AboutPage() {
           >
             <Mail className="h-5 w-5 shrink-0" /> smmmderyadonmez@outlook.com
           </a>
-          <Link
-            href="/iletisim"
+          <a
+            href={APPOINTMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 border border-gold/40 px-4 py-4 text-white"
           >
             Randevu Al <Arrow />
-          </Link>
+          </a>
         </div>
       </nav>
     </main>
